@@ -1,15 +1,18 @@
-Raspberry Basic setup
+mgmt-center
 ===
-### Required Software
+
+## Required Software
 
 #### General
 `sudo apt-get remove --purge wolfram-engine`
+
 `sudo apt-get install vim`
 
 ##### mysql
 Note: if you use static ip, please first install mysql client and then configure the static ip. After that, configure the ip as bind-address property in /etc/mysql/my.ini. Otherwise the mysql-server could not be started!
 
 `sudo apt-get install mysql-server mysql-client`
+
 `sudo apt-get install python-pip`
 
 ##### mysql for flask
