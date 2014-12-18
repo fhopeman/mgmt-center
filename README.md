@@ -1,66 +1,40 @@
-# 1. Basic setup #
-1. Wir laden zuerst das Raspbian Image von der offiziellen Webseite unter http://www.raspberrypi.org/downloads herunter. Nach dem Download muss die ZIP-Datei entpackt werden. In dieser befindet sich eine IMG-Datei, welche das Betriebssystem behinhaltet. Windows-Benutzer benötigen zum Überspielen des Images auf die SD-Karte das Tool Win32DiskImager in der Binary-Version (https://launchpad.net/win32-image-writer). Nach dem Download muss die ZIP-Datei entpackt werden. Benutzer mit Linux oder Mac OS X müssen sicherstellen, dass das Programm dd installiert ist.
-2. 
-- Windows: Öffne die soeben heruntergeladene Win32DiskImager.exe. Im Feld Image File muss man nun das heruntergelaene Raspbian Image einbinden. Im nebenstehenden Feld Device muss man den Laufwerksbuchstaben auswählen auf welches das Image Installiert werden soll. Wenn man sichergestellt hat, dass beide Angaben korrekt sind klickt man auf Write und das Image wird auf die SD-Karte geschrieben.
-- Linux/Mac OS X: Zum Überspielen des Images macht man sich das Progrmm dd zu Nutze. In die Console gibt man folgenden Befehl ein. Dabei muss [IMG] durch den Pfad zum Image und [DEVICE] durch den Pfad zur SD-Karte ersetzt werden. Dieser Vorgang kann einige Minuten dauern.
-		dd bs=1M if=[IMG] of=[DEVICE]
-3. Stecke die SD-Karte nun in dein Raspberry Pi. Bevor du den Mini-USB-Stecker zur Stromversorgung ansteckst, stecke eine Tastatur via USB und einen Bildschirm via HDMI an.
-4. Erststart von Raspberry Pi mit RaspbainNachdem (siehe Bild rechts) einige Initiierungen zum erstmaligen Start von Raspbian getätigt wurden kommt eine grau-blaue Oberfläche samt Menü, durch welche man sich mittels den Pfeiltasten, Enter und Escape auf der Tastur bewegen kann. In dieser werden nun einige Einstellungen durchgeführt.
-5. Als erstes wählen wir den Punkt Expand Filesystem an, damit Raspbian den kompletten Speicherplatz auf der SD-Karte nutzt. Nach kurzer Zeit wird die Erweiterung bestätigt. Jedoch wird das Laufwerk erst beim nächsten Booten erweitert. Das kann, muss aber nicht, einige Zeit in Anspruch nehmen, in dem der Raspberry Pi nicht reagiert.
-6. Nun wählen wir Internationalisation Options >> Change Keyboard Layout, damit wir eine deutsche Tastatur bekommen. Aus der Liste der Tastatur Modelle empfehle ich Classmate PC zu wählen. Daraufhin wird das Keyboad layout abgefragt, wo wir zuerst Other und darauf folgend German wählen um die Auswahlmöglichkeiten für Deutsch zu erhalten. Im Folgenden wählen wir German (ohne Zusätze). Nun werden primäre Tasten und sprachenspezifische Keyboard-Layout-Einstellungen abgefragt. Hierbei wählen wir The default for the keyboard layout. Bei der darauf folgenden Einstellung für kombinierte Tasten wählen wir No compose key. Nun wird gefrag, ob durch das Drücken von STRG + ALT + Entfernen der X server geschlossen werden soll. Ich empfehle No zu wählen.
-7. Jetzt wählen wir im Menü Internationalisation Options >> Change Locale aus. In der Liste navigieren wir zu de_DE.UTF-8 UTF-8 und aktivieren diese Zeile mittels Leertaste. Anschließend klicken wir die Tab Taste und klicken auf Ok. Im Folgenden frägt das System, wie die korrekte Ausgabe von anderssprachigen Anwendungen gewährleistet werden soll. Dort wählen wir en_GB.UTF-8 zur systemweiten Sprache und bestätigen mittels Enter.
-8. Darauffolgend zurück im Hauptmenü wählen wir Internationalisation Options >> Change Timezone und stellen hierbei die richtige Zeitzone ein. Bei mir wäre dies Europe und Berlin für Deutschland.
-9. Zu guter Letzt wählen wir den Punkt Advanced Options >> SSH an, um den SSH-Dienst beim Start des Raspberry Pis automatisch starten zu lassen. Hierzu wählen wir Enable.
-10. Alle die ihren Raspberry Pi, wie ich, am Router hängen haben und per SSH auf den Mini-Computer zugreifen möchten ziehen nun den Netzstecker und hängen den Raspberry Pi an ein LAN-Kabel, welches mit dem Router verbunden sein sollte. Diejenigen, die ihren Raspberry Pi mit HDMI betreiben möchten drücken auf Finish und werden aufgefordert den Raspberry Pi neuzustarten, dem wir zustimmen.
-11. Nachdem der Raspberry Pi wieder gebootet ist aktualisieren wir den Raspberry Pi noch mittels folgender Eingabe in der Konsole. Der Standard-Benutzer hört auf den Namen pi und das Passwort lautet raspberry. Zuerst muss pi, darauf folgend raspberry eingegeben werden.
-	sudo apt-get update && sudo apt-get upgrade
+Raspberry Basic setup
+===
+### Required Software
 
-
-# 2. Software #
-
-### General ###
+#### General
 `sudo apt-get remove --purge wolfram-engine`
-
 `sudo apt-get install vim`
 
-### mysql ###
+##### mysql
 Note: if you use static ip, please first install mysql client and then configure the static ip. After that, configure the ip as bind-address property in /etc/mysql/my.ini. Otherwise the mysql-server could not be started!
 
 `sudo apt-get install mysql-server mysql-client`
-
 `sudo apt-get install python-pip`
 
-##### mysql for flask ##### 
+##### mysql for flask
 `sudo pip install flask-sqlalchemy`
-
 `sudo apt-get install libmysqlclient-dev`
-
 `sudo pip install mysql-python`
 
-### Flask ###
+#### Flask
 http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world, http://flask.pocoo.org/
 
 `sudo pip install flask`
 
-### DHT ###
+#### DHT
 `git clone https://github.com/adafruit/Adafruit_Python_DHT.git`
-
 `cd Adafruit_Python_DHT`
-
 `sudo apt-get upgrade`
-
 `sudo apt-get install build-essential python-dev`
-
 `sudo python setup.py install`
 
-### DS18B20 ###
+#### DS18B20
 
 Activate 1-wire on GPIO 4
 
 `/etc/modules`
-
 `w1-gpio pullup=1`
-
 `w1-therm`
 
 #### Wiring
