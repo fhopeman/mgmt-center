@@ -3,87 +3,71 @@ mgmt-center
 
 ## Required Software
 
-#### General
-`sudo apt-get remove --purge wolfram-engine`
-
-`sudo apt-get install vim`
+First of all, you have to install some additional software which is needed for the management center.
 
 ##### mysql
-Note: if you use static ip, please first install mysql client and then configure the static ip. After that, configure the ip as bind-address property in /etc/mysql/my.ini. Otherwise the mysql-server could not be started!
+
+If you use static ip, please first install mysql client and then configure the static ip. After that, configure the ip as bind-address property in /etc/mysql/my.ini. Otherwise the mysql-server could not be started!
 
 `sudo apt-get install mysql-server mysql-client`
 
-`sudo apt-get install python-pip`
-
 ##### mysql for flask
+
+Flask is a lightweight python web framework which is a good choice for raspberry applications. Most of the additional software is loaded by [pip](https://pypi.python.org/pypi/pip) (`sudo apt-get install python-pip`).
+
 `sudo pip install flask-sqlalchemy`
+
 `sudo apt-get install libmysqlclient-dev`
+
 `sudo pip install mysql-python`
 
 #### Flask
-http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world, http://flask.pocoo.org/
+
+There are several tutorials for flask available, e.g. [this](http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world) or [this](http://flask.pocoo.org).
 
 `sudo pip install flask`
 
 #### DHT
+
+DHT is the first environment component which is used to feel your home. It's responsible for temperature and humidity.
+
 `git clone https://github.com/adafruit/Adafruit_Python_DHT.git`
+
 `cd Adafruit_Python_DHT`
+
 `sudo apt-get upgrade`
+
 `sudo apt-get install build-essential python-dev`
+
 `sudo python setup.py install`
+
+I have written a [script](../scripts/readTempHumDHT22.py) for testing the DHT sensor.
 
 #### DS18B20
 
-Activate 1-wire on GPIO 4
+The DS18B20 is an 1-wire temperature sensor. 1-wire has to be activated on your raspberry pi.
 
-`/etc/modules`
+The file `/etc/modules` has to be appended with following content:
+
 `w1-gpio pullup=1`
+
 `w1-therm`
 
-#### Wiring
+I have written a [script](../scripts/readTempDS18B20.py) to test the sensor.
+
+##### Wiring
+If you have bought a standard sensor, the wiring is as follows:
 Red -> Vdd; Black -> GND; White -> DQ
 Wiring intern: Red -> GreenRed; White -> WhiteRed; Black -> White
 
 
-# 3. Development folder #
+## Development Setup
+
+For convenience reasons I prefer to develop on my computer and push the current files to the raspberry as soon as possible. For that I mount the development folder from my computer to the raspberry. On the raspberry I start the sever with reload mode enabled. So a fresh server with all changes is guaranteed any time.
+
 `sudo mount -t cifs -o username=NAME,password=PW //IP_ADDRESS/mgmt-center ~/mgmt-center_dev`
 
-# 4. WLAN #
-
-### static wlan (/etc/network/interfaces) ###
-auto wlan0
-
-iface lo inet loopback
-iface eth0 inet dhcp
-
-allow-hotplug wlan0
-iface wlan0 inet static
-address 192.168.0.120
-netmask 255.255.255.0
-gateway 192.168.0.254
-wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
-iface default inet dhcp
-
-
-### default wlan (/etc/network/interfaces) ###
-auto lo
-
-iface lo inet loopback
-iface eth0 inet dhcp
-
-allow-hotplug wlan0
-iface wlan0 inet manual
-wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
-iface default inet dhcp
-
-### default without wlan ###
-
-auto lo eth0
-iface lo inet loopback
-
-iface eth0 inet dhcp
-
-# 5. Mgmt-Center #
+# 5. mgmt-center
 
 ### Jobs ###
 
