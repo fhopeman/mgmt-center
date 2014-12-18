@@ -4,16 +4,16 @@
 	<!-- Current environment -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<i class="glyphicon glyphicon-leaf"> Aktuell</i>
+			<i class="glyphicon glyphicon-leaf"> Current</i>
 			<a id="btn-environment-update" class="pull-right" href="{{ url_for('environment_update_rooms') }}"><i class="glyphicon glyphicon-refresh"></i></a>
 		</div>
 		<div class="panel-body">
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Raum</th>
-						<th>Temperatur</th>
-						<th>Feuchtigkeit</th>
+						<th>Room</th>
+						<th>Temperature</th>
+						<th>Humidity</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,7 +44,7 @@
 	<!-- Temperature history -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<i class="glyphicon glyphicon-stats"> Temperatur</i>
+			<i class="glyphicon glyphicon-stats"> Temperature</i>
 		</div>
 		<div class="panel-body">
 			<div id="chart-temperature"></div>
@@ -54,7 +54,7 @@
 	<!-- Humidity history -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<i class="glyphicon glyphicon-stats"> Feuchtigkeit</i>
+			<i class="glyphicon glyphicon-stats"> Humidity</i>
 		</div>
 		<div class="panel-body">
 			<div id="chart-humidity"></div>
@@ -82,9 +82,9 @@
 				{% for env in rooms[room_id]["history"] %}
 					// create second dim of array if roomCount == 0
 					if (roomCount == 0) {
-						dataTemperature.push(new Array(moment("{{ env[0] }}").format("DD. MMM, HH:mm"), {{ env[1] }}));
+						dataTemperature.push(new Array(moment("{{ env[0] }}").format("HH:mm"), {{ env[1] }}));
 						{% if env[2] != None %}
-							dataHumidity.push(new Array(moment("{{ env[0] }}").format("DD. MMM, HH:mm"), {{ env[2] }}));
+							dataHumidity.push(new Array(moment("{{ env[0] }}").format("HH:mm"), {{ env[2] }}));
 						{% endif %}
 					}
 					// push value without creating second dim (already present)

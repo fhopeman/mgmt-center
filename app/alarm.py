@@ -8,7 +8,7 @@ import time
 
 # config
 irs = {
-#   0: {"name": "Wohnzimmer", "slave": 0x04, "lastAlert": None}
+#   0: {"name": "living room", "slave": 0x04, "lastAlert": None}
 }
 SLAVE_CMD_ALARM = 10
 SLAVE_CMD_ALARM_DIGITS = 1

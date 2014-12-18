@@ -4,8 +4,9 @@ from util_communication import slaveCall, slaveRead
 
 # define lights (id is gpio pin)
 lights = {
-     0: {"name": "Wohnzimmer TV", "slave": 0x04, "id": 0, "state": 0}
-#   ,1: {"name": "Wohnzimmer Regal", "slave": 0x06, "id": 0, "state": 0}
+    0: {"name": "living room TV", "slave": 0x04, "id": 0, "state": 0},
+    1: {"name": "living room LED", "slave": 0x04, "id": 0, "state": 0},
+    2: {"name": "balcony", "slave": 0x04, "id": 0, "state": 0}
 }
 SLAVE_CMD_LIGHT_START = 20
 SLAVE_CMD_LIGHT_DIGITS = 1

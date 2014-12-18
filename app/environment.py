@@ -8,8 +8,8 @@ from thread import start_new_thread
 
 # config
 rooms = {
-    0: {"name": "Wohnzimmer", "slave": 0x04, "sensor": 0, "currentTemp": None, "currentHum": None, "history": list()},
-    1: {"name": "Balkon", "slave": 0x04, "sensor": 1, "currentTemp": None, "currentHum": None, "history": list()}
+    0: {"name": "living room", "slave": 0x04, "sensor": 0, "currentTemp": None, "currentHum": None, "history": list()},
+    1: {"name": "balcony", "slave": 0x04, "sensor": 1, "currentTemp": None, "currentHum": None, "history": list()}
 }
 SLAVE_CMD_ENVIRONMENT_START = 30
 SLAVE_CMD_ENVIRONMENT_DIGITS = 10
