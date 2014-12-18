@@ -43,7 +43,7 @@ DHT is the first environment component which is used to feel your home. It's res
 
 `sudo python setup.py install`
 
-I have written a [script](../scripts/readTempHumDHT22.py) for testing the DHT sensor.
+I have written a [script](/fhopeman/mgmt-center/tree/master/scripts/readTempHumDHT22.py) for testing the DHT sensor.
 
 #### DS18B20
 
@@ -55,7 +55,7 @@ The file `/etc/modules` has to be appended with following content:
 
 `w1-therm`
 
-I have written a [script](../scripts/readTempDS18B20.py) to test the sensor.
+I have written a [script](/fhopeman/mgmt-center/tree/master/scripts/readTempDS18B20.py) to test the sensor.
 
 ##### Wiring
 If you have bought a standard sensor, the wiring is as follows:
@@ -78,7 +78,7 @@ The thread based scheduling is active by default. The environment update and env
 
 ### I2C Raspberry to Arduino Nano
 
-The raspberry (master) is communicating with several arduino nanos (slaves). For that, the I2C protocol is used. The setup and some other thing are described below. To test your I2C connection, you can use [this](../scripts/ii2cCommandLine.py) script.
+The raspberry (master) is communicating with several arduino nanos (slaves). For that, the I2C protocol is used. The setup and some other thing are described below. To test your I2C connection, you can use [this](/fhopeman/mgmt-center/tree/master/scripts/i2cCommandLine.py) script.
 
 #### Setup
 
