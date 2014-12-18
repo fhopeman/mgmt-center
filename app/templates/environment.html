@@ -1,0 +1,126 @@
+{% extends "sceleton.html" %}
+{% block content %}
+
+	<!-- Current environment -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="glyphicon glyphicon-leaf"> Aktuell</i>
+			<a id="btn-environment-update" class="pull-right" href="{{ url_for('environment_update_rooms') }}"><i class="glyphicon glyphicon-refresh"></i></a>
+		</div>
+		<div class="panel-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Raum</th>
+						<th>Temperatur</th>
+						<th>Feuchtigkeit</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for room_id in rooms %}
+					<tr>
+						<td>{{ rooms[room_id]["name"] }}</td>
+						<td>
+							{% if rooms[room_id]["currentTemp"] %}
+								{{ rooms[room_id]["currentTemp"] }} &deg;C
+							{% else %}
+								-
+							{% endif %}
+						</td>
+						<td>
+							{% if rooms[room_id]["currentHum"] %}
+								{{ rooms[room_id]["currentHum"] }} %
+							{% else %}
+								-
+							{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- Temperature history -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="glyphicon glyphicon-stats"> Temperatur</i>
+		</div>
+		<div class="panel-body">
+			<div id="chart-temperature"></div>
+		</div>
+	</div>
+
+	<!-- Humidity history -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="glyphicon glyphicon-stats"> Feuchtigkeit</i>
+		</div>
+		<div class="panel-body">
+			<div id="chart-humidity"></div>
+		</div>
+	</div>
+
+	<!-- draw chart -->
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+	
+		// draw templerature chart
+		function drawChart() {
+			// prepare data
+			var dataTemperature = new Array(new Array("Date"));
+			var dataHumidity = new Array(new Array("Date"));
+			var roomCount = 0;
+			{% for room_id in rooms %}
+				dataTemperature[0].push("{{ rooms[room_id]["name"] }}");
+				{% if rooms[room_id]["currentHum"] != None %}
+					dataHumidity[0].push("{{ rooms[room_id]["name"] }}");
+				{% endif %}
+				var envCount = 0;
+				{% for env in rooms[room_id]["history"] %}
+					// create second dim of array if roomCount == 0
+					if (roomCount == 0) {
+						dataTemperature.push(new Array(moment("{{ env[0] }}").format("DD. MMM, HH:mm"), {{ env[1] }}));
+						{% if env[2] != None %}
+							dataHumidity.push(new Array(moment("{{ env[0] }}").format("DD. MMM, HH:mm"), {{ env[2] }}));
+						{% endif %}
+					}
+					// push value without creating second dim (already present)
+					else {
+						dataTemperature[envCount + 1].push({{ env[1] }});
+						{% if env[2] != None %}
+							dataHumidity[envCount + 1].push({{ env[2] }});
+						{% endif %}
+					}
+					++envCount;
+				{% endfor %}
+				++roomCount;
+			{% endfor %}
+
+			// draw charts
+			var chartOptions = {
+				chartArea: {height: "70%", width: "80%"},
+				height: 350,
+				width: "80%",
+				pointSize: 3,
+				vAxes: [{format: "#.##"}],
+				legend: {position: 'bottom', textStyle: {fontSize: 12}}
+			}
+			// draw if not only labels
+			if (dataTemperature.length > 1) {
+				new google.visualization.LineChart(document.getElementById('chart-temperature')).draw(
+					google.visualization.arrayToDataTable(dataTemperature), $.extend({
+						// colors:  ["#CC0033", "#AA3311"]
+					}, chartOptions)
+				);
+				new google.visualization.LineChart(document.getElementById('chart-humidity')).draw(
+					google.visualization.arrayToDataTable(dataHumidity), $.extend({
+					}, chartOptions)
+				);
+			}
+		}
+	</script>
+
+{% endblock %}
