@@ -3,7 +3,7 @@ Mgmt-center
 
 Mgmt-center is an open source project to make your home more intelligent. The main features are the management of temperature, humidity, light and alarm. The behaviour of the app is implemented as responsive design to provide the best support for several devices.
 
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png =100x20)
 
 # Required Software
 
