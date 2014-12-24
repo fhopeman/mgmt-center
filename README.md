@@ -1,7 +1,7 @@
 Open Source Home Automation
 ===
 
-Mgmt-center is an open source project to make your home more intelligent. The main features are the management of temperature, humidity, light and alarm. The behaviour of the app is implemented as responsive design to provide the best support for several devices.
+MGMT-CENTER is an open source project to make your home more intelligent. The main features are the management of temperature, humidity, light and alarm. The behaviour of the app is implemented as responsive design to provide the best support for several devices.
 
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_temp_hum_0.png" width="32%"/>
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_led.png" width="32%"/>
@@ -71,11 +71,11 @@ For convenience reasons I prefer to develop on my computer and push the current 
 
 `sudo mount -t cifs -o username=NAME,password=PW //IP_ADDRESS/mgmt-center ~/mgmt-center_dev`
 
-# Mgmt-center How to
+# MGMT-CENTER How to
 
 ### Jobs
 
-There are several jobs which have to be executed. A first approach is to use cron based jobs by calling the action url. But then, the jobs aren't defined inside the tool itself and you have to synchronize the cron tab with the tool. A second approach (which I use) is to use thread based scheduling inside the mgmt-center code.
+There are several jobs which have to be executed. A first approach is to use cron based jobs by calling the action url. But then, the jobs aren't defined inside the tool itself and you have to synchronize the cron tab with the tool. A second approach (which I use) is to use thread based scheduling inside the MGMT-CENTER code.
 
 The thread based scheduling is active by default. The environment update and environment persisting is executed automatically. If you will use the cron based solution, please modify your code and disable the event loops.
 
