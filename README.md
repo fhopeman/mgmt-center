@@ -9,6 +9,10 @@ This tool is supposed to be an alternative to the mostly expensive systems which
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_led.png" width="32%"/>
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_alarm.png" width="32%"/>
 
+## Contribution
+
+Feel free to ask questions or make improvement advices in the [issue section](https://github.com/fhopeman/mgmt-center/issues). Also feel free to start developing directly.
+
 ## Planned features
  - Alarm notification by email or some other communication (e.g. enable light).
  - Alarm en-/disabling via RFID or other techniques.
@@ -18,13 +22,13 @@ This tool is supposed to be an alternative to the mostly expensive systems which
 
 First of all, you have to install some additional software which is needed for the management center.
 
-##### mysql
+#### mysql
 
 If you use static ip, please first install mysql client and then configure the static ip. After that, configure the ip as bind-address property in /etc/mysql/my.ini. Otherwise the mysql-server could not be started!
 
 `sudo apt-get install mysql-server mysql-client`
 
-##### mysql for flask
+#### mysql for flask
 
 Flask is a lightweight python web framework which is a good choice for raspberry applications. Most of the additional software is loaded by [pip](https://pypi.python.org/pypi/pip) (`sudo apt-get install python-pip`).
 
@@ -67,7 +71,6 @@ w1-therm
 
 I have written a [script](https://github.com/fhopeman/mgmt-center/tree/master/scripts/readTempDS18B20.py) to test the sensor.
 
-##### Wiring
 If you have bought a standard sensor, the wiring is as follows:
 Red -> Vdd; Black -> GND; White -> DQ
 Wiring intern: Red -> GreenRed; White -> WhiteRed; Black -> White
@@ -88,7 +91,7 @@ The thread based scheduling is active by default. The environment update and env
 
 ### I2C Raspberry to Arduino Nano
 
-The raspberry (master) is communicating with several arduino nanos (slaves). For that, the I2C protocol is used. The setup and some other thing are described below. To test your I2C connection, you can use [this](https://github.com/fhopeman/mgmt-center/tree/master/scripts/i2cCommandLine.py) script.
+The raspberry (master) is communicating with several arduino nanos (slaves). For that, the I2C protocol is used. The setup and some other thing are described below. To test your I2C connection, you can use [this](https://github.com/fhopeman/mgmt-center/tree/master/scripts/i2cCommandLine.py) script. There you can use all commands which are described in the protocol section below.
 
 #### Setup
 
