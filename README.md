@@ -9,12 +9,12 @@ This tool is supposed to be an alternative to the mostly expensive systems which
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_led.png" width="32%"/>
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_alarm.png" width="32%"/>
 
-# Planned features
+## Planned features
  - Alarm notification by email or some other communication (e.g. enable light).
  - Alarm en-/disabling via RFID or other techniques.
  - Burglar confusion via toggling light on and off in undeterminated time intervals.
 
-# Required Software
+## Required Software
 
 First of all, you have to install some additional software which is needed for the management center.
 
@@ -78,7 +78,7 @@ For convenience reasons I prefer to develop on my computer and push the current 
 
 `sudo mount -t cifs -o username=NAME,password=PW //IP_ADDRESS/mgmt-center ~/mgmt-center_dev`
 
-# MGMT-CENTER How to
+## How to
 
 ### Jobs
 
