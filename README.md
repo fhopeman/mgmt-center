@@ -3,9 +3,16 @@ Open Source Home Automation
 
 MGMT-CENTER is an open source project to make your home more intelligent. The main features are the management of temperature, humidity, light and alarm. The behaviour of the app is implemented as responsive design to provide the best support for several devices. The software is based on one raspberry pi (master) and any count of arduinos (slaves). Each arnuino acts as satellite station which can measure the environment.
 
+This tool is supposed to be an alternative to the mostly expensive systems which are purchasable. For this software only some components from the chinese of my trust (e.g. ebay) are necessary.
+
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_temp_hum_0.png" width="32%"/>
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_led.png" width="32%"/>
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_alarm.png" width="32%"/>
+
+# Planned features
+ - Alarm notification by email or some other communication (e.g. enable light).
+ - Alarm en-/disabling via RFID or other techniques.
+ - Burglar confusion via toggling light on and off in undeterminated time intervals.
 
 # Required Software
 
