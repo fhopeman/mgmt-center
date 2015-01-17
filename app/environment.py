@@ -9,11 +9,12 @@ from thread import start_new_thread
 # config
 rooms = {
     0: {"name": "living room", "slave": 0x04, "sensor": 0, "currentTemp": None, "currentHum": None, "history": list()},
-    1: {"name": "balcony", "slave": 0x04, "sensor": 1, "currentTemp": None, "currentHum": None, "history": list()}
+    1: {"name": "bedroom", "slave": 0x24, "sensor": 0, "currentTemp": None, "currentHum": None, "history": list()},
+    2: {"name": "balcony", "slave": 0x04, "sensor": 1, "currentTemp": None, "currentHum": None, "history": list()}
 }
 SLAVE_CMD_ENVIRONMENT_START = 30
 SLAVE_CMD_ENVIRONMENT_DIGITS = 10
-CACHED_HISTORY_ELEMENTS = 10
+CACHED_HISTORY_ELEMENTS = 12
 READ_ENVIRONMENT_TIMEOUT = 1800
 PERSIST_ENVIRONMENT_START_DELAY = 60
 PERSIST_ENVIRONMENT_TIMEOUT = 10800
