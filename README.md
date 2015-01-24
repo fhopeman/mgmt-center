@@ -3,21 +3,32 @@ Open Source Home Automation
 
 MGMT-CENTER is an open source project to make your home more intelligent. The main features are the management of temperature, humidity, light and alarm. The behaviour of the app is implemented as responsive design to provide the best support for several devices. The software is based on one raspberry pi (master) and any count of arduinos (slaves). Each arnuino acts as satellite station which can measure the environment.
 
+This tool is supposed to be an alternative to the mostly expensive systems which are purchasable. For this software only some components from the chinese of my trust (e.g. ebay) are necessary.
+
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_temp_hum_0.png" width="32%"/>
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_led.png" width="32%"/>
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_alarm.png" width="32%"/>
 
-# Required Software
+## Contribution
+
+Feel free to ask questions or make improvement advices in the [issue section](https://github.com/fhopeman/mgmt-center/issues). Also feel free to start developing directly.
+
+## Planned features
+ - Alarm notification by email or some other communication (e.g. enable light).
+ - Alarm en-/disabling via RFID or other techniques.
+ - Burglar confusion via toggling light on and off in undeterminated time intervals.
+
+## Required Software
 
 First of all, you have to install some additional software which is needed for the management center.
 
-##### mysql
+#### mysql
 
 If you use static ip, please first install mysql client and then configure the static ip. After that, configure the ip as bind-address property in /etc/mysql/my.ini. Otherwise the mysql-server could not be started!
 
 `sudo apt-get install mysql-server mysql-client`
 
-##### mysql for flask
+#### mysql for flask
 
 Flask is a lightweight python web framework which is a good choice for raspberry applications. Most of the additional software is loaded by [pip](https://pypi.python.org/pypi/pip) (`sudo apt-get install python-pip`).
 
@@ -60,7 +71,6 @@ w1-therm
 
 I have written a [script](https://github.com/fhopeman/mgmt-center/tree/master/scripts/readTempDS18B20.py) to test the sensor.
 
-##### Wiring
 If you have bought a standard sensor, the wiring is as follows:
 Red -> Vdd; Black -> GND; White -> DQ
 Wiring intern: Red -> GreenRed; White -> WhiteRed; Black -> White
@@ -71,7 +81,7 @@ For convenience reasons I prefer to develop on my computer and push the current 
 
 `sudo mount -t cifs -o username=NAME,password=PW //IP_ADDRESS/mgmt-center ~/mgmt-center_dev`
 
-# MGMT-CENTER How to
+## How to
 
 ### Jobs
 
@@ -81,7 +91,7 @@ The thread based scheduling is active by default. The environment update and env
 
 ### I2C Raspberry to Arduino Nano
 
-The raspberry (master) is communicating with several arduino nanos (slaves). For that, the I2C protocol is used. The setup and some other thing are described below. To test your I2C connection, you can use [this](https://github.com/fhopeman/mgmt-center/tree/master/scripts/i2cCommandLine.py) script.
+The raspberry (master) is communicating with several arduino nanos (slaves). For that, the I2C protocol is used. The setup and some other thing are described below. To test your I2C connection, you can use [this](https://github.com/fhopeman/mgmt-center/tree/master/scripts/i2cCommandLine.py) script. There you can use all commands which are described in the protocol section below.
 
 #### Setup
 

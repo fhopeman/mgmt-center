@@ -23,7 +23,7 @@ while True:
     if (nano == 0):
         address = 0x04
     if (nano == 1):
-        address = 0x06
+        address = 0x24
 
     # select cmd
     cmd = input("cmd: ")
