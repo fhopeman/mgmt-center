@@ -10,7 +10,7 @@ import logging
 from logging.handlers import TimedRotatingFileHandler
 
 formatter = logging.Formatter("[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
-handler = TimedRotatingFileHandler("logs/log", "midnight", 7)
+handler = TimedRotatingFileHandler("logs/log", "midnight", 2)
 handler.setFormatter(formatter)
 app.logger.addHandler(handler)
 app.logger.setLevel(logging.DEBUG)

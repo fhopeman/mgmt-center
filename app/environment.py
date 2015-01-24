@@ -40,6 +40,7 @@ class Environment(db.Model):
 @app.route("/")
 @app.route("/environment")
 def environment():
+    app.logger.debug("page 'environment' called")
     data = {
         "rooms": rooms
     }
@@ -51,19 +52,18 @@ def environment():
 """
 @app.route("/environment/update")
 def environment_update_rooms():
+    app.logger.debug("updating rooms ..")
     for room_id in rooms:
         room = rooms[room_id]
         try:
             tmpTemp, tmpHum = read_environment(room)
+            if tmpTemp:
+                room["currentTemp"] = round(tmpTemp, 1)
+            if tmpHum:
+                room["currentHum"] = round(tmpHum, 1)
+            app.logger.debug(".. '%s': '%s', '%s'", room["name"], room["currentTemp"], room["currentHum"])
         except Exception as e:
             app.logger.error("'%s' while reading environment of '%s'", e, room["name"])
-
-        if (tmpTemp):
-            room["currentTemp"] = round(tmpTemp, 1)
-        if tmpHum:
-            room["currentHum"] = round(tmpHum, 1)
-
-    return "success"
 
 """
     Persists the latest room environment measurement
@@ -71,21 +71,24 @@ def environment_update_rooms():
 """
 @app.route("/environment/persist")
 def environment_persist_rooms():
+    app.logger.debug("persisting rooms ..")
     current_time = datetime.now();
     # persist each room environment in database
     for room_id in rooms:
         room = rooms[room_id]
         temp = room["currentTemp"];
         hum = room["currentHum"];
-        db.session.add(Environment(current_time, room_id, temp, hum))
-        # update room history cache
-        history = room["history"];
-        if len(history) >= CACHED_HISTORY_ELEMENTS:
-            history.pop(0)
-        history.append((current_time, temp, hum))
+        try:
+            db.session.add(Environment(current_time, room_id, temp, hum))
+            # update room history cache
+            history = room["history"];
+            if len(history) >= CACHED_HISTORY_ELEMENTS:
+                history.pop(0)
+            history.append((current_time, temp, hum))
+            app.logger.debug(".. '%s': '%s', '%s'", room["name"], room["currentTemp"], room["currentHum"])
+        except Exception as e:
+            app.logger.error("'%s' while persisting environment of '%s'", e, room["name"])
     db.session.commit()
-
-    return "success"
 
 """
     Reads the current temperature and humidity of the definied room.
@@ -114,6 +117,7 @@ def read_environment(room):
 """
 def read_environment_loop(timeout):
     while True:
+        app.logger.info("job: start to update environment")
         environment_update_rooms()
         time.sleep(timeout)
 
@@ -122,12 +126,15 @@ def read_environment_loop(timeout):
 
     timeout: defines the execution interval
 """
-def persist_environment_loop(timeout):
-    time.sleep(PERSIST_ENVIRONMENT_START_DELAY)
+def persist_environment_loop(startDelay, timeout):
+    time.sleep(startDelay)
     while True:
+        app.logger.info("job: start to persist environment")
         environment_persist_rooms()
         time.sleep(timeout)
 
 # start jobs
 start_new_thread(read_environment_loop, (READ_ENVIRONMENT_TIMEOUT,))
-start_new_thread(persist_environment_loop, (PERSIST_ENVIRONMENT_TIMEOUT,))
+# read_environment_loop(READ_ENVIRONMENT_TIMEOUT)
+start_new_thread(persist_environment_loop, (PERSIST_ENVIRONMENT_START_DELAY, PERSIST_ENVIRONMENT_TIMEOUT,))
+# persist_environment_loop(PERSIST_ENVIRONMENT_START_DELAY, PERSIST_ENVIRONMENT_TIMEOUT)

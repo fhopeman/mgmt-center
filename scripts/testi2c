@@ -1,7 +1,8 @@
-le true
+#/bin/bash
+
+while true
 do
   echo "test($2)"
   i2cdetect -y 1 | grep "$2"
   sleep $1
 done
-

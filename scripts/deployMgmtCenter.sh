@@ -1,4 +1,4 @@
 #!/bin/bash
 
-rm -r ~/mgmt-center
-cp -R ~/mgmt-center_dev ~/mgmt-center
+sudo rm -r ~/mgmt-center
+sudo cp -R ~/mgmt-center_dev ~/mgmt-center
