@@ -52,7 +52,11 @@ def environment():
 def environment_update_rooms():
     for room_id in rooms:
         room = rooms[room_id]
-        tmpTemp, tmpHum = read_environment(room)
+        try:
+            tmpTemp, tmpHum = read_environment(room)
+        except Exception as e:
+            app.logger.error("'%s' while reading environment of '%s'", e, room["name"])
+
         if (tmpTemp):
             room["currentTemp"] = round(tmpTemp, 1)
         if tmpHum:
