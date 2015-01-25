@@ -135,6 +135,4 @@ def persist_environment_loop(startDelay, timeout):
 
 # start jobs
 start_new_thread(read_environment_loop, (READ_ENVIRONMENT_TIMEOUT,))
-# read_environment_loop(READ_ENVIRONMENT_TIMEOUT)
 start_new_thread(persist_environment_loop, (PERSIST_ENVIRONMENT_START_DELAY, PERSIST_ENVIRONMENT_TIMEOUT,))
-# persist_environment_loop(PERSIST_ENVIRONMENT_START_DELAY, PERSIST_ENVIRONMENT_TIMEOUT)
