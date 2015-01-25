@@ -1,26 +1,27 @@
 Open Source Home Automation
 ===
 
-MGMT-CENTER is an open source project to make your home more intelligent. The main features are the management of temperature, humidity, light and alarm. The behaviour of the app is implemented as responsive design to provide the best support for several devices. The software is based on one raspberry pi (master) and any count of arduinos (slaves). Each arnuino acts as satellite station which can measure the environment.
+MGMT-CENTER is an open source home automation project to make your home more intelligent. The main features are the management of temperature, humidity, light and alarm. The behaviour of the app is implemented as responsive design to provide the best support for several devices. The software is based on one raspberry pi (master) and any count of arduinos (slaves). Each arnuino acts as satellite station which can measure the environment.
 
-This tool is supposed to be an alternative to the mostly expensive systems which are purchasable. For this software only some components from the chinese of my trust (e.g. ebay) are necessary.
+This tool is supposed to be an alternative to the mostly expensive home automation systems which are purchasable. For this software only some components from the chinese of my trust (e.g. ebay) are necessary.
 
-<img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_temp_hum_0.png" width="32%"/>
-<img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_led.png" width="32%"/>
-<img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_alarm.png" width="32%"/>
+<img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_temp_hum_0.png" alt="home automation - temperature and humidity overview" width="32%"/>
+<img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_led.png" alt="home automation - Led overview" width="32%"/>
+<img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/screenshot_alarm.png" alt="home automation - alarm overview" width="32%"/>
 
 ## Contribution
 
 Feel free to ask questions or make improvement advices in the [issue section](https://github.com/fhopeman/mgmt-center/issues). Also feel free to start developing directly.
 
 ## Planned features
+ - LED strip controlling
  - Alarm notification by email or some other communication (e.g. enable light).
  - Alarm en-/disabling via RFID or other techniques.
  - Burglar confusion via toggling light on and off in undeterminated time intervals.
 
 ## Required Software
 
-First of all, you have to install some additional software which is needed for the management center.
+First of all, you have to install some additional software which is needed for the management center. Currently I'm working on a script to set up the environment immediately, but it isn't finished yet.
 
 #### mysql
 
@@ -28,9 +29,17 @@ If you use static ip, please first install mysql client and then configure the s
 
 `sudo apt-get install mysql-server mysql-client`
 
+#### Flask
+
+Flask is a lightweight python web framework which is a good choice for raspberry applications. Especially open source home automation software is easy to write in flask.
+
+There are several tutorials for flask available, e.g. [this](http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world) or [this](http://flask.pocoo.org).
+
+`sudo pip install flask`
+
 #### mysql for flask
 
-Flask is a lightweight python web framework which is a good choice for raspberry applications. Most of the additional software is loaded by [pip](https://pypi.python.org/pypi/pip) (`sudo apt-get install python-pip`).
+Most of the additional software is loaded by [pip](https://pypi.python.org/pypi/pip) (`sudo apt-get install python-pip`).
 
 ```
 sudo pip install flask-sqlalchemy
@@ -38,15 +47,9 @@ sudo apt-get install libmysqlclient-dev
 sudo pip install mysql-python
 ```
 
-#### Flask
-
-There are several tutorials for flask available, e.g. [this](http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world) or [this](http://flask.pocoo.org).
-
-`sudo pip install flask`
-
 #### DHT
 
-DHT is the first environment component which is used to feel your home. It's responsible for temperature and humidity.
+DHT is the first environment component which is used to feel your home. It's responsible for temperature and humidity. One of the most important basics of home automation.
 
 ```
 git clone https://github.com/adafruit/Adafruit_Python_DHT.git
@@ -88,6 +91,8 @@ For convenience reasons I prefer to develop on my computer and push the current 
 There are several jobs which have to be executed. A first approach is to use cron based jobs by calling the action url. But then, the jobs aren't defined inside the tool itself and you have to synchronize the cron tab with the tool. A second approach (which I use) is to use thread based scheduling inside the MGMT-CENTER code.
 
 The thread based scheduling is active by default. The environment update and environment persisting is executed automatically. If you will use the cron based solution, please modify your code and disable the event loops.
+
+The scheduling of the threads only works reliable in production mode (debug = False in run.py), because if the project is reloaded automatically, the job background threads are started multiple. In production mode the auto reload is disabled.
 
 ### I2C Raspberry to Arduino Nano
 
