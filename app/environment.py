@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 from app import app, db
 from util_communication import slaveCall, slaveRead
 
@@ -40,7 +40,7 @@ class Environment(db.Model):
 @app.route("/")
 @app.route("/environment")
 def environment():
-    app.logger.debug("page 'environment' called")
+    app.logger.debug("page 'environment' called from '%s'", request.remote_addr)
     data = {
         "rooms": rooms
     }
@@ -64,6 +64,8 @@ def environment_update_rooms():
             app.logger.debug(".. '%s': '%s', '%s'", room["name"], room["currentTemp"], room["currentHum"])
         except Exception as e:
             app.logger.error("'%s' while reading environment of '%s'", e, room["name"])
+
+    return "success"
 
 """
     Persists the latest room environment measurement
@@ -89,6 +91,8 @@ def environment_persist_rooms():
         except Exception as e:
             app.logger.error("'%s' while persisting environment of '%s'", e, room["name"])
     db.session.commit()
+
+    return "success"
 
 """
     Reads the current temperature and humidity of the definied room.
