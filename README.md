@@ -148,6 +148,10 @@ The arduinos have to be set up like the following circuit. You just have to conn
 
 <img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/arduino_slave_circuit.jpg" width="100%"/>
 
+And this is the result on the board within the box:
+
+<img src="https://raw.githubusercontent.com/fhopeman/mgmt-center/master/docs/images/arduino_box.jpg" width="100%"/>
+
 ### Protocol
 This is the used protocol for the I2C communication. The raspberry is the master device which calls the slaves with the following commands. The communication can be tested with this [script](https://github.com/fhopeman/mgmt-center/blob/master/scripts/i2cCommandLine.py). Don't forget to configure the addresses of the arduino nanos. One TODO is to parameterize them.. ;)
 
